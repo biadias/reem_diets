@@ -20,7 +20,8 @@ REEM.loadclean.strata(strata_lookup_file    = "lookups/combined_BTS_strata.csv",
 
 # Load lookup file for mapping RACE codes to biomass. Later need to specify
 # which column to use for group mapping (varies by ecosystem)
-race_lookup_base <- read.clean.csv("lookups/race_lookup_combined.csv")
+#race_lookup_base <- read.clean.csv("lookups/race_lookup_combined.csv")
+race_lookup_base <- read.clean.csv("lookups/race_lookup_base_v2.csv")
 
 race_lookup_col <- c("EBS" = "ebs_ecopath",
                      "AI" = "ai_ecopath",
@@ -36,7 +37,7 @@ race_lookup_col <- c("EBS" = "ebs_ecopath",
 # Note: BS Survey filter (for slope stations) moved to core loading code
 
 #race_lookup_older <- read.clean.csv("lookups/goa_race_lookup_apr_04_2023.csv") %>%
-#  select(species_code,final_goa)
+#  select(species_code,final_wgoa)
 #
 #race_lookup_combined <- race_lookup_base %>%
 #  left_join(race_lookup_older,by="species_code")
@@ -46,7 +47,7 @@ race_lookup_col <- c("EBS" = "ebs_ecopath",
 
 # WGOA GUILDS -----------------------------------------------
 this.model  <- "WGOA"
-race_lookup      <- race_lookup_base %>% mutate(race_group  = .data[["final_goa"]])
+race_lookup      <- race_lookup_base %>% mutate(race_group  = .data[["final_wgoa"]])
 q_table          <- read.clean.csv("apps/ESR_guilds/GroupQ_2021_GOA.csv")
 domains_included <-  c(
   "Chirikof_shelf",

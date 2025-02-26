@@ -6,6 +6,7 @@
 
 library(tidyverse)
 library(here)
+source("R/REEM_fooddata_functions.R")
 
 race_lookup_base <- read.clean.csv("lookups/race_lookup_combined.csv")
 

@@ -21,7 +21,7 @@ race_lookup_base_v2 <- race_lookup_base %>%
                            final_goa =="Other_skates"    ~ "Other skates", 
                            final_goa =="Big_skate"       ~ "Big skate", 
                            final_goa =="Longnose_skate"  ~ "Longnose skate", 
-                           final_goa =="Spotted_ratfish" ~ "Spotted_ratfish", # FLAG ####
+                           final_goa =="Spotted_ratfish" ~ "Shelf demersal fish",
                            final_goa =="Shallow_water_flatfish" ~ "Shallow-water flatfish", 
                            final_goa =="Arrowtooth_flounder"    ~"Arrowtooth flounder adult", 
                            final_goa =="Pacific_halibut"        ~ "Pacific halibut adult", 
@@ -56,8 +56,8 @@ race_lookup_base_v2 <- race_lookup_base %>%
                            final_goa =="POP"             ~ "Pacific ocean perch adult", 
                            final_goa =="Demersal_shelf_rockfish" ~ "Demersal shelf rockfish", 
                            final_goa =="Pelagic_shelf_rockfish"  ~ "Pelagic shelf rockfish", 
-                           final_goa =="Unlisted_rockfish"       ~ "Unlisted_rockfish", #FLAG ####
-                           final_goa =="Black_rockfish"          ~ "Black_rockfish", #FLAG ####
+                           final_goa =="Unlisted_rockfish"       ~ "Demersal shelf rockfish", 
+                           final_goa =="Black_rockfish"          ~ "Pelagic shelf rockfish", 
                            final_goa =="Sessile_epifauna"        ~ "Sessile epifauna", 
                            final_goa =="Gelatinous_carnivores"   ~ "Gelatinous carnivores", 
                            final_goa =="Infauna"                 ~ "Infauna", 
@@ -73,5 +73,7 @@ race_lookup_base_v2 <- race_lookup_base %>%
                            final_goa =="MISC_SHELLS"         ~ "MISC_SHELLS"))
          
 
-race_lookup_base_v2 <- race_lookup_base_v2 %>% fill(final_goa)       
+race_lookup_base_v2 <- race_lookup_base_v2 %>% fill(final_goa)
+
+write.csv(race_lookup_base_v2,"lookups/race_lookup_base_v2.csv",row.names=F)
          

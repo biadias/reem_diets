@@ -16,7 +16,7 @@ race_lookup_base_v2 <- race_lookup_base %>%
   mutate(final_goa = case_when(final_goa =="MISC_NA"         ~ "MISC_NA",   
                            final_goa =="Shelf_demersals" ~ "Shelf demersal fish", 
                            final_goa =="ZERO"            ~ "ZERO", 
-                           final_goa =="Sharks_demersal" ~ "Sharks_demersal", #FLAG ####
+                           final_goa =="Sharks_demersal" ~ "Pacific sleeper shark", #FLAG ####
                            final_goa =="Salmon_shark"    ~ "Salmon shark", 
                            final_goa =="Pacific_dogfish" ~ "Pacific dogfish", 
                            final_goa =="Other_skates"    ~ "Other skates", 
@@ -35,7 +35,7 @@ race_lookup_base_v2 <- race_lookup_base %>%
                            final_goa =="Sablefish"             ~ "Sablefish adult", 
                            final_goa =="Shelf_forage_fish"     ~ "Shelf forage fish", 
                            final_goa =="Slope_forage_fish"     ~ "Slope forage fish", 
-                           final_goa =="Pacific_pomfret"       ~ "Pacific_pomfret", #FLAG ####
+                           final_goa =="Pacific_pomfret"       ~ "MISC_NA", #FLAG ####
                            final_goa =="Pacific_herring"       ~ "Pacific herring adult", 
                            final_goa =="Slope_demersals"       ~"Slope demersal fish", 
                            final_goa =="Large_sculpins"        ~ "Large sculpins", 
@@ -51,14 +51,14 @@ race_lookup_base_v2 <- race_lookup_base %>%
                            final_goa =="Pink_salmon"     ~ "Salmon returning", #FLAG ####
                            final_goa =="Chum_salmon"     ~ "Salmon returning", #FLAG ####
                            final_goa =="Sockeye_salmon"  ~ "Salmon returning", #FLAG ####
-                           final_goa =="Pacific_saury"   ~ "Shelf forage fish", 
+                           final_goa =="Pacific_saury"   ~ "MISC_NA", #FLAG ####
                            final_goa =="Thornyheads"     ~ "Thornyheads", 
                            final_goa =="Slope_rockfish"  ~ "Slope rockfish", 
                            final_goa =="POP"             ~ "Pacific ocean perch adult", 
                            final_goa =="Demersal_shelf_rockfish" ~ "Demersal shelf rockfish", 
                            final_goa =="Pelagic_shelf_rockfish"  ~ "Pelagic shelf rockfish", 
                            final_goa =="Unlisted_rockfish"       ~ "Demersal shelf rockfish", 
-                           final_goa =="Black_rockfish"          ~ "Pelagic shelf rockfish", 
+                           final_goa =="Black_rockfish"          ~ "MISC_NA", 
                            final_goa =="Sessile_epifauna"        ~ "Sessile epifauna", 
                            final_goa =="Gelatinous_carnivores"   ~ "Gelatinous carnivores", 
                            final_goa =="Infauna"                 ~ "Infauna", 

@@ -25,7 +25,8 @@ race_lookup_base <- read.clean.csv("lookups/race_lookup_base_v2.csv")
 
 race_lookup_col <- c("EBS" = "ebs_ecopath",
                      "AI" = "ai_ecopath",
-                     "WGOA" = "goa_ecopath")
+                     "WGOA" = "wgoa_ecopath",
+                     "EGOA" = "egoa_ecopath")
 
 
 
@@ -151,5 +152,72 @@ write.csv(model_sum,
 #write.csv(bio_totals,"apps/ESR_guilds/bio_totals_2024test.csv",row.names=F)
 
 
-  
+# EGOA GUILDS -----------------------------------------------
+this.model.e  <- "EGOA"
+race_lookup      <- race_lookup_base %>% mutate(race_group  = .data[["final_egoa"]])
+q_table          <- read.clean.csv("apps/ESR_guilds/GroupQ_2021_GOA.csv")
+domains_included_e <-  c(
+  "Southeastern_shelf",
+  "Southeastern_slope",
+  "Southeastern_gully",
+  "Yakutat_shelf",
+  "Yakutat_gully",
+  "Yakutat_slope"
+)
 
+tot_model_area_e <- sum(strat_areas$area[strat_areas$model == this.model.e &
+                                         strat_areas$stratum_bin %in% domains_included_e])
+cpue_dat_e  <- get_cpue_all(model = this.model.e) %>% 
+  drop_na(race_group)
+  
+check_RACE_codes(cpue_dat_e)
+
+#stratsum_q <- get_stratsum_q(cpue_dat, q_table)
+#domain_sum_q <- get_domain_sum_q(cpue_dat, q_table)
+# Code to do means and sds
+domain_stats_e <- haul_domain_summary(this.model.e)
+
+haul_sum_e <- cpue_dat_e %>%
+  group_by(year, model, race_group, stratum_bin, hauljoin) %>%
+  summarize(
+    haul_wgtcpue = sum(wgtcpue),
+    haul_numcpue = sum(numcpue),
+    .groups = "keep"
+  )
+
+domain_sum_e <- haul_sum_e %>%
+  group_by(year, model, race_group, stratum_bin) %>%
+  summarize(
+    tot_wtcpue  = sum(haul_wgtcpue),
+    tot_wtcpue2 = sum(haul_wgtcpue * haul_wgtcpue),
+    #squared needed for var calculation
+    .groups = "keep"
+  ) %>%
+  left_join(domain_stats_e, by = c("year", "model", "stratum_bin")) %>%
+  mutate(
+    mean_wtcpue   = tot_wtcpue / stations,
+    var_wtcpue    = tot_wtcpue2 / stations - mean_wtcpue * mean_wtcpue,
+    bio_t_km2     = mean_wtcpue / 1000,
+    bio_tons      = bio_t_km2 * area,
+    var_bio_t_km2 = var_wtcpue / (1000 * 1000),
+    var_bio_tons  = var_wtcpue * (area / 1000) * (area / 1000)
+  )
+
+model_sum_e <- domain_sum_e %>%
+  group_by(year, model, race_group) %>%
+  summarize(
+    bio_tons     = sum(bio_tons),
+    var_bio_tons = sum(var_bio_tons),
+    .groups = "keep"
+  ) %>%
+  mutate(
+    model_area       = tot_model_area_e,
+    bio_tons_km2     = bio_tons / model_area,
+    var_bio_tons_km2 = var_bio_tons / (model_area * model_area),
+    sd_bio_tons      = sqrt(var_bio_tons),
+    cv_bio           = sd_bio_tons / bio_tons
+  )  
+
+write.csv(model_sum_e,
+          "apps/ESR_guilds/EGOA_groundfish_bio.csv",
+          row.names = F)

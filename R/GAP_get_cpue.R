@@ -288,6 +288,3 @@ get_cpue_all <- function(racebase_tables = list(
   return(x)
 }
 
-
-
-
